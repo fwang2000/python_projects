@@ -1,0 +1,10 @@
+import math
+
+def e_gen(n):
+    
+    for i in range(min(n, 50)+1):
+        
+        yield (str(math.e))[i]
+
+for i in e_gen(10):
+    print(i)
