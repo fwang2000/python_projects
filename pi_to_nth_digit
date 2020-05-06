@@ -1,0 +1,10 @@
+import math
+
+def pi_gen(n):
+  
+  for i in range(min(n, 50) + 1):
+      
+      yield(str(math.pi))[i]
+
+for i in print_pi(10):
+  print(i)
