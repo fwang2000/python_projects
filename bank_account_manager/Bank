@@ -1,0 +1,71 @@
+class Bank:
+
+    def __init__(self, bank_id):
+        
+        self.bank_id = bank_id
+        customers = []
+        
+
+    def monthly_fee(self):
+        
+        '''
+        charge monthly fee to all banks
+        '''
+        
+        day_of_month = datetime.now().day
+        if (day_of_month > 7 and day_of_month < 15) or day_of_month > 21:
+            return
+
+        for customer in self.customers:
+
+            if customer.calctotal() < 1000:
+
+                return
+
+            for acct in customer.accounts[0]:
+
+                acct.balance -= 5
+
+            for acct in customer.accounts[1]:
+
+                acct.balance -= 5
+
+            for acct in customer.accounts[2]:
+
+                acct.balance -= 5
+                
+
+    def make_deposit(customer, acct_type, acct_num, dep_amount):
+
+        '''
+        make_deposit(customer, acct_type, acct_num, dep_amount)
+        customer    = variable name
+        acct_type   = string 'C', 'S', or 'B'
+        acct_num    = integer
+        dep_amount  = integer or float
+        '''  
+
+        accounts = customer.accounts.get(acct_type[0].upper())
+        for acct in accounts:
+
+            if acct.acct_num == acct_num:
+
+                acct.deposit(dep_amount)
+                
+
+    def make_withdrawal(customer, acct_type, acct_num, draw_amount:
+
+        '''
+        make_withdrawal(customer, acct_type, acct_num, dep_amount)
+        customer    = variable name
+        acct_type   = string 'C', 'S', or 'B'
+        acct_num    = integer
+        draw_amount  = integer or float
+        '''  
+
+        accounts = customer.accounts.get(acct_type[0].upper())
+        for acct in accounts:
+
+            if acct.acct_num == acct_num:
+
+                acct.withdraw(draw_amount)
