@@ -54,7 +54,9 @@ class Bank:
             if acct.acct_num == acct_num:
 
                 acct.deposit(dep_amount)
+                return
                 
+        print('Account not found')
 
     def make_withdrawal(customer, acct_type, acct_num, draw_amount:
 
@@ -72,3 +74,6 @@ class Bank:
             if acct.acct_num == acct_num:
 
                 acct.withdraw(draw_amount)
+                return
+                
+        print('Account not found')
