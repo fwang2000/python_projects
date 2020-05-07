@@ -1,0 +1,41 @@
+class ChequingAccount(Account):
+    
+    def __init__(self, acct_num, balance):
+        
+        super().__init__(acct_num, balance)
+        self.transactions = []
+    
+    def __str__(self):
+        
+        return 'Chequing ' + super().__str__()
+    
+    def deposit(self, amount):
+        
+        super().deposit(amount)
+        self.transactions.append(f'{datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")}: Deposited ${amount}')
+    
+    def withdraw(self, amount):
+        
+        bal = self.balance
+        super().withdraw(amount)
+        
+        if bal != self.balance:
+            
+            self.transactions.append(f'{datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")}: Withdrew ${amount}')
+        
+        else:
+            
+            self.transactions.append(f'{datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")}: Withdrawal Failed')
+            
+    def get_transactions(self):
+        
+        print('Transactions:')
+        for transaction in self._gen_transactions():
+            
+            print('  ' + transaction)
+    
+    def _gen_transactions(self):
+        
+        for t in self.transactions:
+            
+            yield t
