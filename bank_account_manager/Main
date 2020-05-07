@@ -1,0 +1,19 @@
+import schedule
+import time
+
+bank = Bank(12345)
+schedule.every().monday.do(bank.monthly_fee)
+
+mike = Customer('Michael', 1021)
+nancy = Customer('Nancy', 2762)
+
+bank.add_customer(mike)
+bank.add_customer(nancy)
+
+mike.open_chequing(150, 555.55)
+mike.open_savings(200, 130.41)
+mike.print_total_balance()
+
+nancy.open_business(2018, 8900)
+bank.make_deposit(nancy, 'B', 2018, 67.45)
+bank.make_withdrawal(nancy, 'B', 2018, 10000000)
