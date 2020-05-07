@@ -1,0 +1,22 @@
+class SavingsAccount(Account):
+    
+    def __init__(self, acct_num, balance):
+        
+        super().__init__(acct_num, balance)
+        self.withdrawal_limit = 7
+        schedule.every(2).weeks.do(self.reset_withdraw_limit)
+    
+    def __str__(self):
+        
+        return 'Savings ' + super().__str__()
+    
+    def withdraw(self, amount):
+        
+        if self.withdrawal_limit > 0:
+            
+            super().withdraw(amount)
+            self.withdrawal_limit -= 1
+    
+    def reset_withdraw_limit(self):
+        
+        self.withdrawal_limit = 7
