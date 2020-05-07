@@ -1,0 +1,14 @@
+class BusinessAccount(Account):
+    
+    def __init__(self, acct_num, balance):
+        
+        super().__init__(acct_num, balance)
+    
+    def __str__(self):
+        
+        return 'Business ' + super().__str__()
+    
+    def withdraw(self, amount):
+        
+        self.balance *= 0.995
+        super().withdraw(amount)
