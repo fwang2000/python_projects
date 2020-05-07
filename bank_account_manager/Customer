@@ -1,0 +1,49 @@
+class Customer:
+    
+    def __init__(self, name, pin):
+        
+        self.name = name
+        self.pin = pin
+    
+        self.accounts = {'C':[], 'S':[], 'B':[]}
+    
+    def __str__(self):
+        
+        return self.name
+    
+    def open_chequing(self, acct_num, first_deposit):
+        
+        self.accounts.get('C').append(ChequingAccount(acct_num, first_deposit))
+        
+    def open_savings(self, acct_num, first_deposit):
+        
+        self.accounts.get('S').append(SavingsAccount(acct_num, first_deposit))
+        
+    def open_business(self, acct_num, first_deposit):
+        
+        self.accounts.get('B').append(BusinessAccount(acct_num, first_deposit))
+        
+    def print_total_balance(self):
+            
+        total = self.calctotal()
+        print(f'Combined Balances: ${total:.2f}')
+    
+    def calctotal(self):
+
+        total = 0
+        for acct in self.accounts.get('C'):
+
+            print(acct)
+            total += acct.balance
+
+        for acct in self.accounts.get('S'):
+
+            print(acct)
+            total += acct.balance
+
+        for acct in self.accounts.get('B'):
+
+            print(acct)
+            total += acct.balance
+
+        return round(total, 2)
