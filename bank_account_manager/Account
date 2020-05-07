@@ -1,3 +1,25 @@
 class Account:
-
-  pass
+    
+    def __init__(self, acct_num, balance):
+        
+        self.acct_num = acct_num
+        self.balance = balance
+        
+    def __str__(self):
+        
+        return f"Account Number: {self.acct_num} \nBalance: ${self.balance:.2f}"
+        
+    def withdraw(self, amount):
+        
+        if amount <= self.balance:
+            
+            self.balance -= amount
+            print('Money Withdrawn.')
+            
+        else:
+            
+            print('You do not have enough money to make that withdrawal')
+    
+    def deposit(self, amount):
+        
+        self.balance += amount    
