@@ -1,0 +1,70 @@
+from collections import defaultdict
+
+class Graph:
+    
+    def __init__(self, vertices):
+        
+        self.max_V = vertices
+        self.E = 0
+        self.graph = defaultdict(set) # sets default value of unspecified key as an empty list
+        
+    def addEdge(self, u, v):
+        
+        if len(self.graph.keys()) == self.max_V and (u not in self.graph.keys() or v not in self.graph.keys()):
+            
+            print('Max keys already reached')
+            return 
+        
+        if len(self.graph.keys()) == self.max_V - 1 and u not in self.graph.keys() and v not in self.graph.keys():
+            
+            print('Invalid input: Too many keys will be created')
+            return
+        
+        if u == v:
+            
+            print('No self loops')
+            return
+        
+        if v not in self.graph[u]:
+            
+            self.E += 1
+        
+        self.graph[u].add(v)
+        self.graph[v].add(u)
+        
+        print(self.graph)
+        print(self.E)
+        
+    def isConnected(self):
+        
+        vertices = len(self.graph.keys())
+        
+        visited = [False] * vertices
+        
+        if self.E < vertices - 1:
+            
+            return False
+        
+        self.doDFS(next(iter(self.graph)), 0, visited)
+        
+        print(visited)
+        
+        for i in visited:
+            
+            if not i:
+                
+                return False
+        
+        return True
+    
+    def doDFS(self, v, v_index, visited):
+        
+        visited[v_index] = True
+        
+        for u in self.graph[v]:
+            
+            u_index = list(self.graph.keys()).index(u)
+            
+            if not visited[u_index]:
+                
+                self.doDFS(u, u_index, visited)
