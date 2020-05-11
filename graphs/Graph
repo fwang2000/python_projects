@@ -1,3 +1,5 @@
+# Simple Graph
+
 from collections import defaultdict
 
 class Graph:
@@ -6,21 +8,31 @@ class Graph:
         
         self.max_V = vertices
         self.E = 0
-        self.graph = defaultdict(set) # sets default value of unspecified key as an empty list
+        self.graph = defaultdict(set) # sets default value of unspecified key as an empty set
+        
+    def addVertex(self, v):
+        '''
+        Insert new vertex into graph
+        '''
+    
+        self.graph[v]
         
     def addEdge(self, u, v):
+        '''
+        Ensures no self-loops or exceeding maximum amount of vertices
+        Adds u to v's adjacency list and vice-versa, increments edgecount
         
-        if len(self.graph.keys()) == self.max_V and (u not in self.graph.keys() or v not in self.graph.keys()):
+        if len(self.graph.keys()) == self.max_V and (u not in self.graph.keys() or v not in self.graph.keys()): # trying to add a new vertex when maximum is reached
             
             print('Max keys already reached')
             return 
         
-        if len(self.graph.keys()) == self.max_V - 1 and u not in self.graph.keys() and v not in self.graph.keys():
+        if len(self.graph.keys()) == self.max_V - 1 and u not in self.graph.keys() and v not in self.graph.keys(): # trying to add two new vertices when only one vertex can be added
             
             print('Invalid input: Too many keys will be created')
             return
         
-        if u == v:
+        if u == v: # self loop
             
             print('No self loops')
             return
@@ -32,23 +44,26 @@ class Graph:
         self.graph[u].add(v)
         self.graph[v].add(u)
         
-        print(self.graph)
-        print(self.E)
-        
     def isConnected(self):
+        '''
+        checks if graph is connected (from any vertex, there is some path to every other vertex in the graph) through DFS
+        returns True if connected, else False
+        '''
         
         vertices = len(self.graph.keys())
         
-        visited = [False] * vertices
+        # keeps track of which vertices have been visited
+        visited = [False] * vertices  
         
-        if self.E < vertices - 1:
+        # simple connected graphs must have E >= V - 1
+        if self.E < vertices - 1: 
             
             return False
         
-        self.doDFS(next(iter(self.graph)), 0, visited)
+        # for undirected graph, any starting vertex is valid
+        self.doDFS(next(iter(self.graph)), 0, visited) 
         
-        print(visited)
-        
+        # check if any node is unvisited
         for i in visited:
             
             if not i:
@@ -58,13 +73,24 @@ class Graph:
         return True
     
     def doDFS(self, v, v_index, visited):
+        '''
+        Traverses through all reachable vertices from v by DFS, marking each as visited
         
+        inputs:
+        v       = current vertex
+        v_index = index of the vertex in self.graph.keys (graph vertex set) and visited
+        visited = list of visited vertices
+        '''
+        # mark v as visited
         visited[v_index] = True
         
+        # recurse through the vertices in v's adjacency list
         for u in self.graph[v]:
             
+            # get the index of u in the graph's vertex set
             u_index = list(self.graph.keys()).index(u)
             
             if not visited[u_index]:
                 
-                self.doDFS(u, u_index, visited)
+                # recursively search unvisited vertices
+                self.doDFS(u, u_index, visited) 
