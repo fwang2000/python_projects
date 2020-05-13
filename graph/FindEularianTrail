@@ -1,0 +1,62 @@
+def findETrail(g):
+     
+    edgeCount = [0] * len(g.graph)
+    i = 0    
+    
+    for key in g.graph:
+        
+        edgeCount[i] = len(g.graph[key])
+        i += 1
+        
+    if not isEularian(g):
+        
+        print('No Trail found')
+        return
+        
+    if g.oddV == 0:
+        
+        v = list(g.graph.keys())[0]
+        v_index = 0
+    
+    else:
+        
+        i = 0
+        for key in g.graph:
+            
+            if len(g.graph[key]) % 2 == 1:
+                
+                v = key
+                v_index = i
+                break
+                
+            i += 1    
+    
+    curr_path = []
+    e_trail = []
+    
+    curr_path.append(v)
+    
+    while len(curr_path):
+        
+        if edgeCount[v_index]:
+            
+            curr_path.append(v)
+            
+            u = g.graph[v].pop()
+            
+            edgeCount[v_index] -= 1
+            
+            g.graph[u].remove(v)
+            v = u
+            v_index = list(g.graph.keys()).index(u)
+            edgeCount[v_index] -= 1
+        
+        else:
+            
+            e_trail.append(v)
+            v = curr_path[-1]
+            curr_path.pop()
+    
+    for i in range(len(e_trail) - 1, -1, -1):
+        
+        print(e_trail[i] + " ")
