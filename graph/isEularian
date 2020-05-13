@@ -1,0 +1,11 @@
+def isEularian(g):
+    
+    if not g.isConnected():
+        print('not connected')
+        return False
+    
+    if g.oddV > 2:
+        print('more odds')
+        return False
+    
+    return True
