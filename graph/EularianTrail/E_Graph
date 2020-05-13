@@ -1,0 +1,127 @@
+'''
+Representation of Simple, Undirected graph using an Adjancency List
+'''
+
+from collections import defaultdict
+
+class Graph:
+    
+    def __init__(self, max_v):
+        
+        self.max_V = max_V 
+        self.E = 0  # keep track of edges in O(1) time
+        self.oddV = 0  # keep track of vertices with odd degree in O(1) time
+        self.graph = defaultdict(set) # sets default value of unspecified key as an empty list
+        
+    def addVertex(self, v):
+    '''
+    Add vertex to graph with no edges
+    
+    input:
+    v = new vertex
+    '''
+        
+        self.graph[v]
+    
+    def addEdge(self, u, v):
+        
+        if len(self.graph.keys()) == self.max_V and (u not in self.graph.keys() or v not in self.graph.keys()):
+            
+            print('Max keys already reached')
+            return 
+        
+        if len(self.graph.keys()) == self.max_V - 1 and u not in self.graph.keys() and v not in self.graph.keys():
+            
+            print('Invalid input: Too many keys will be created')
+            return
+        
+        if u == v:
+            
+            print('No self loops')
+            return
+        
+        if v not in self.graph[u]:
+            
+            self.E += 1
+        
+        self.graph[u].add(v)
+        self.graph[v].add(u)
+        
+        print(self.graph.keys())
+        print(self.E)
+        
+        if len(self.graph[u]) % 2 == 1:
+            
+            self.oddV += 1
+        
+        else:
+            
+            self.oddV -= 1
+            
+        if len(self.graph[v]) % 2 == 1:
+            
+            self.oddV += 1
+        
+        else:
+            
+            self.oddV -= 1
+        
+    def removeEdge(self, u, v):
+        
+        if v in self.graph[u]:
+            
+            self.graph[u].remove(v)
+            self.graph[v].remove(u)
+            
+            self.E -= 1
+    
+            if len(self.graph[u]) % 2 == 1:
+
+                self.oddV += 1
+
+            else:
+
+                self.oddV -= 1
+
+            if len(self.graph[v]) % 2 == 1:
+
+                self.oddV += 1
+
+            else:
+
+                self.oddV -= 1
+    
+    def isConnected(self):
+        
+        vertices = len(self.graph.keys())
+        print(len(self.graph))
+        
+        visited = [False] * vertices
+        
+        if self.E < vertices - 1 or vertices == 0:
+            
+            return False
+        
+        self.doDFS(next(iter(self.graph)), 0, visited)
+        
+        print(visited)
+        
+        for i in visited:
+            
+            if not i:
+                
+                return False
+        
+        return True
+    
+    def doDFS(self, v, v_index, visited):
+        
+        visited[v_index] = True
+        
+        for u in self.graph[v]:
+            
+            u_index = list(self.graph.keys()).index(u)
+            
+            if not visited[u_index]:
+                
+                self.doDFS(u, u_index, visited)
