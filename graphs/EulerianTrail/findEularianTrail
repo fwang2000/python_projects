@@ -1,6 +1,12 @@
 def findETrail(g):
-     
-    edgeCount = [0] * len(g.graph)
+    '''
+    Produce the Eularian Trail (trail that uses every edge once) of a graph or print that no trail exists
+    
+    inputs:
+    g = Eularian graph 
+    '''
+    
+    edgeCount = [0] * len(g.graph)  # degrees of each vertex in the graph
     i = 0    
     
     for key in g.graph:
@@ -13,11 +19,13 @@ def findETrail(g):
         print('No Trail found')
         return
         
+    # all vertices are even, start at any vertex
     if g.oddV == 0:
         
         v = list(g.graph.keys())[0]
         v_index = 0
     
+    start at an even vertex
     else:
         
         i = 0
