@@ -25,16 +25,19 @@ class Graph:
     
     def addEdge(self, u, v):
         
+        # attempting to add a new key when max keys is already reached
         if len(self.graph.keys()) == self.max_V and (u not in self.graph.keys() or v not in self.graph.keys()):
             
             print('Max keys already reached')
             return 
         
+        # attempting to add two new keys when only one new key is allowed
         if len(self.graph.keys()) == self.max_V - 1 and u not in self.graph.keys() and v not in self.graph.keys():
             
             print('Invalid input: Too many keys will be created')
             return
         
+        # ensuring no self-loops
         if u == v:
             
             print('No self loops')
@@ -46,9 +49,6 @@ class Graph:
         
         self.graph[u].add(v)
         self.graph[v].add(u)
-        
-        print(self.graph.keys())
-        print(self.E)
         
         if len(self.graph[u]) % 2 == 1:
             
@@ -90,11 +90,15 @@ class Graph:
             else:
 
                 self.oddV -= 1
-    
+   
     def isConnected(self):
         
-        vertices = len(self.graph.keys())
-        print(len(self.graph))
+        '''
+        traverse through graph by DFS, marking each vertice as visited, 
+        and returning whether each vertex is visited
+        '''
+        
+        vertices = len(self.graph)
         
         visited = [False] * vertices
         
@@ -102,9 +106,8 @@ class Graph:
             
             return False
         
+        # DFS helper
         self.doDFS(next(iter(self.graph)), 0, visited)
-        
-        print(visited)
         
         for i in visited:
             
@@ -115,6 +118,15 @@ class Graph:
         return True
     
     def doDFS(self, v, v_index, visited):
+        '''
+        DFS helper function
+        Visit each adjacent vertex of v
+        
+        inputs:
+        v       = current vertex
+        v_index = index of vertex in self.graph (and visited)
+        visited = list of booleans tracking which vertices have been visited
+        '''
         
         visited[v_index] = True
         
