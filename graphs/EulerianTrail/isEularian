@@ -3,7 +3,8 @@ def isEularian(g):
     if not g.isConnected():
         print('not connected')
         return False
-    
+   
+    # if a graph has two or more vertices with odd degree, it cannot have a Eulerian trail or cycle
     if g.oddV > 2:
         print('more odds')
         return False
