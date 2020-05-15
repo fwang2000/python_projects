@@ -1,0 +1,81 @@
+class Heap():
+    
+    def __init__(self):
+        
+        self.array = []
+        self.size = 0
+        
+    def insert(self, v, distance):
+        
+        minHeapNode = [v, distance]
+        self.array.insert(self.size, minHeapNode)
+        self.size += 1
+        self.heapifyUp(self.size - 1, distance)
+    
+    def heapifyDown(self, cIndex):
+        
+        mIndex = cIndex
+        left = 2*mIndex + 1;
+        right = 2*mIndex + 2;
+        
+        if left < self.size and self.array[left][1] < self.array[mIndex][1]:
+            
+            mIndex = left
+        
+        elif right < self.size and self.array[right][1] < self.array[mIndex][1]:
+            
+            mIndex = right
+        
+        if mIndex != cIndex:
+            
+            self.swap(mIndex, cIndex)
+            self.heapifyDown(mIndex)
+    
+    def swap(self, i1, i2):
+        
+        temp = self.array[i1]
+        self.array[i1] = self.array[i2]
+        self.array[i2] = temp
+        
+    def removeMin(self):
+        
+        if self.isEmpty():
+            
+            return
+        
+        minVal = self.array[0]
+        self.array[0] = self.array[self.size - 1]
+        self.size -= 1
+        self.heapifyDown(0)
+        
+        return minVal
+
+    def isEmpty(self):
+        
+        return self.size == 0
+    
+    def heapifyUp(self, cIndex, distance):
+        
+        self.array[cIndex][1] = distance
+        
+        if cIndex > 0:
+            
+            if self.array[cIndex][1] < self.array[(cIndex - 1)//2][1]:
+                
+                self.swap(cIndex, (cIndex - 1)//2)
+                self.heapifyUp((cIndex - 1)//2, self.array[(cIndex - 1)//2][1])
+    
+    def printArr(self, dist, n): 
+        print("Vertex\tDistance from source")
+        for i in range(n): 
+            print(f"{i}\t\t{dist[i]}") 
+    
+    def __str__(self):
+        
+        string = ""
+        
+        for node in self.array:
+            
+            string += f'[{node[0]}, {node[1]}]\n'
+        
+        return string
