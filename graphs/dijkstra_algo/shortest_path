@@ -1,0 +1,29 @@
+def shortestPath(g, s):
+    
+    visited = [False] * len(g.graph) 
+    
+    distances = []
+    
+    for i in range(len(g.graph) + 1):
+        
+        distances.append(math.inf)
+    
+    s_index = list(g.graph.keys()).index(s)
+    distances[s_index] = 0
+    
+    g.minHeap.heapifyUp(s_index, distances[s_index])
+    
+    while not g.minHeap.isEmpty():
+        
+        minNode = g.minHeap.removeMin()
+        v = minNode[0]
+        
+        for edge in g.graph[v]:
+            
+            w = edge[0]
+            if distances[v] + edge[1] < distances[w]:
+                
+                distances[w] = distances[v] + edge[1]
+                g.minHeap.heapifyUp(w, distances[w])
+            
+    g.minHeap.printArr(distances, len(g.graph))
