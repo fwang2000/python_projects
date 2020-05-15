@@ -1,0 +1,41 @@
+from collections import defaultdict
+import math
+
+class Graph:
+    
+    def __init__(self):
+        
+        self.graph = defaultdict(list) # sets default value of unspecified key as an empty list
+        self.minHeap = Heap()
+        
+    def addVertex(self, v):
+        
+        self.graph[v]
+    
+    def addEdge(self, u, v, weight):
+            
+        if u not in self.graph.keys():
+
+            self.minHeap.insert(u, math.inf)
+                   
+        if u == v:
+            
+            print('No self loops')
+            return
+        
+        if v not in self.graph[u]:
+            
+            self.graph[u].append((v, weight))
+            self.minHeap.insert(v, math.inf)
+            
+        else:
+            
+            print('Edge already exists')
+            
+        
+    def removeEdge(self, u, v):
+        
+        if v in self.graph[u]:
+            
+            self.graph[u].remove(v)
+                
