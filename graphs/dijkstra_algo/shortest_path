@@ -1,7 +1,5 @@
 def shortestPath(g, s):
-    
-    visited = [False] * len(g.graph) 
-    
+
     distances = []
     
     for i in range(len(g.graph) + 1):
