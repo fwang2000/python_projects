@@ -1,0 +1,83 @@
+import threading
+import os
+import sys
+import shutil
+from PIL import Image
+    
+path = '/users/fwang/Downloads/MISCELLANEOUS/CompSci Stuff/Python'
+os.chdir(path)
+
+if __name__ == '__main__':
+
+    path1 = '/images'
+    path2 = '/thumbnails'
+
+if not os.path.exists(path1):
+
+    os.makedirs(path1)
+
+if not os.path.exists(path2):
+
+    os.makedirs(path2)
+
+path1 = path + path1
+path2 = path + path2
+
+def imgResize(file):
+    
+    while True:
+        
+        try:
+            width = int(input('Select width of thumbnail'))
+            height = int(input('Select height of thumbnail'))
+            break;
+            
+        except:
+            
+            print('Must be an integer!')
+    
+    size = width, height
+    fileName, ext = file.split('.')
+    os.chdir(path1)
+    im = Image.open(file)
+    im.thumbnail(size)
+    im.save(fileName + '_resized.jpg', "JPEG")
+    newImage = Image.open("%s_resized.jpg" %fileName)
+    print('\tresized image')
+    
+def move(file):
+    
+    currFile = path1 + '/' + file
+    newFile = path2 + '/' + file
+    shutil.move(currFile, newFile)
+    
+def rename(file):
+    
+    newFileName = input('name this file')
+    os.rename(path2 + '/' + file, path2 + '/' + newFileName + '.jpg')
+
+threadLock = threading.Lock()
+
+for file in os.listdir(path1):
+    
+    print('Image: ' + file)
+    
+    threads = []
+    
+    thread1 = myThread(1, file, imgResize)
+    thread1.start()
+    thread1.join()
+    
+    thread2 = myThread(2, file, move)
+    thread2.start()
+    threads.append(thread2)
+    
+    thread3 = myThread(3, file, rename)
+    thread3.start()
+    threads.append(thread3)
+    
+    for t in threads:
+        
+        t.join()
+
+print('Done')
