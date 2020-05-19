@@ -1,0 +1,16 @@
+import threading
+
+class myThread(threading.Thread):
+    
+    def __init__(self, threadID, file, func):
+        
+        threading.Thread.__init__(self)
+        self.threadID = threadID
+        self.file = file
+        self.func = func
+    
+    def run(self):
+        
+        threadLock.acquire()
+        self.func(file)
+        threadLock.release()
